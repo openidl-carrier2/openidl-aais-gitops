@@ -1,14 +1,14 @@
-ordererorg_domain: "{{aaisOrdererDomain}}"
+ordererorg_domain: "openidl.aaisdirect.com"
 # domain name of organization
-domain: "{{subdomain}}.{{domain})"
+domain: "carrier.car2.aaisdirect.com"
 # internal domain name from internal private hosted zone in route53
-internal_domain: "{{subdomain}}.internal.{{domain}}"
+internal_domain: "carrier.internal.car2.aaisdirect.com"
 # type of the node, accepted: aais, analytics, carrier
 node_type: "carrier"
 
 network:
     # organization name to be used
-    org_name: "${orgName}"
+    org_name: "car2"
     # if true, this would deploy orderer organization
     # this would be true for aais and false for rest of the orgs
     ordererorg: "false"
@@ -31,10 +31,10 @@ network:
               # chaincode name to be used for installing and committing chaincode
               name: openidl-cc-default
               repo_url: github.com/openidl-org/openidl-main.git
-              repo_branch: "{{chaincodeRepoBranch}}"
+              repo_branch: "develop"
               repo_path: openidl-chaincode/chaincode/openidl
           # name of the channel between analytics and carrier
-        - name: { { analyticCarrierChannelName } }
+        - name: anal-car2
           # chaincode details to be used to install and commit in the channel
           chaincode:
               # chaincode name
@@ -42,16 +42,16 @@ network:
               # github repo url from which the chaincode should be installed (public repository)
               repo_url: github.com/openidl-org/openidl-main.git
               # github repo branch from which the chaincode should be picked
-              repo_branch: "{{chaincodeRepoBranch}}"
+              repo_branch: "develop"
               # chaincode directory path in the github repo
               repo_path: openidl-chaincode/chaincode/openidl
               # private data collection to be used while approving an committing the chaincode
               collectionconfig:
                   # name of the private data collection
-                  - name: "{{analyticsOrgName}}_{{orgName}_pdc"
+                  - name: "analytics_car2_pdc"
                     # policy to be used in private data collection
-                    policy: "OR('{{analyticsOrgNameMSP.member', '{{orgName}}MSP.member')"
+                    policy: "OR('analyticsMSP.member', 'car2MSP.member')"
                   # name of the private data collection
-                  - name: "{{analyticsOrgName first 4}}_{{orgName}_pdc"
+                  - name: "anal_car2_pdc"
                     # policy to be used in private data collection
-                    policy: "OR('{{analyticsOrgNameMSP.member', '{{orgName}}MSP.member')"
+                    policy: "OR('analyticsMSP.member', 'car2MSP.member')"
